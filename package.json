@@ -1,0 +1,71 @@
+{
+  "name": "@bakesaled/carbonate",
+  "version": "0.0.1",
+  "description": "A tool that converts financial data from OFX, QFX, or CSV into JSON.",
+  "author": "Brandon Eleuterio",
+  "license": "MIT",
+  "keywords": [
+    "TypeScript",
+    "JavaScript",
+    "Open Financial Exchange",
+    "OFX"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "dist/main.js",
+  "module": "dist/main.es.js",
+  "jsnext:main": "dist/index.es.js",
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "rollup -c",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "tsc-watch --onSuccess \"node ./dist/examples/index.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "test": "jest",
+    "test:ci": "npm run test:cov -- --runInBand --ci --logHeapUsage",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+  },
+  "dependencies": {
+    "date-fns": "^2.9.0",
+    "prompts": "^2.3.1",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@types/jest": "25.1.1",
+    "@types/node": "^13.1.6",
+    "@types/prompts": "^2.0.3",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.31.1",
+    "rollup-plugin-typescript2": "^0.26.0",
+    "ts-jest": "25.1.0",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.6.0",
+    "tsc-watch": "^4.1.0",
+    "tsconfig-paths": "^3.9.0",
+    "tslint": "^6.0.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.7.4"
+  },
+  "peerDependencies": {},
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}
