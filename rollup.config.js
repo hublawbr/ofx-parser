@@ -33,6 +33,7 @@ export default {
     typescript({
       typescript: require('typescript'),
       clean: true,
+      tsconfig: 'src/tsconfig.lib.json',
       tsconfigOverride: { compilerOptions: { module: 'es2015' } }
     })
   ]

@@ -5,7 +5,7 @@ import { PositionModel } from '../position.model';
 import { TransactionModel } from '../transaction.model';
 import { OfxStatementTransactionAdapter } from './ofx-statement-transaction.adapter';
 import { OfxInvestmentTransactionAdapter } from './ofx-investment-transaction.adapter';
-import { StatementModel } from './statement.model';
+import { StatementModel } from '../statement.model';
 import { OfxInvestmentBalanceAdapter } from './ofx-investment-balance.adapter';
 import { OfxInvestmentPositionAdapter } from './ofx-investment-position.adapter';
 import * as Xml2JsParser from 'xml2js';

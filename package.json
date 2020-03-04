@@ -1,6 +1,6 @@
 {
   "name": "@bakesaled/carbonate",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A tool that converts financial data from OFX, QFX, or CSV into JSON.",
   "author": "Brandon Eleuterio",
   "license": "MIT",
@@ -13,9 +13,15 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bakesaled/carbonate.git"
+  },
+  "homepage": "https://github.com/bakesaled/carbonate#readme",
   "main": "dist/main.js",
   "module": "dist/main.es.js",
   "jsnext:main": "dist/index.es.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "rollup -c",
