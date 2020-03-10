@@ -21,9 +21,7 @@ export default {
   ],
   external: [
     ...Object.keys(pkg.dependencies || {}),
-    ...Object.keys(pkg.peerDependencies || {}),
-    'url',
-    'tls'
+    ...Object.keys(pkg.peerDependencies || {})
   ],
   plugins: [
     resolve({

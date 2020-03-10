@@ -1,6 +1,6 @@
 {
   "name": "@bakesaled/carbonate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tool that converts financial data from OFX, QFX, or CSV into JSON.",
   "author": "Brandon Eleuterio",
   "license": "MIT",
@@ -59,7 +59,12 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.7.4"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "date-fns": "^2.9.0",
+    "xml2js": "^0.4.23",
+    "stream": "~0.0.2",
+    "timers": "^0.1.1"
+  },
   "jest": {
     "moduleFileExtensions": [
       "js",
