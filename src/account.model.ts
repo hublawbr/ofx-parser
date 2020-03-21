@@ -1,9 +1,9 @@
 export interface AccountModel {
   bankId?: string;
   brokerId?: string;
-  accountId: string;
-  accountType: 'BANK' | 'CREDITCARD' | 'INVESTMENT';
-  ofxAccountType:
+  accountId?: string;
+  accountType?: 'BANK' | 'CREDITCARD' | 'INVESTMENT';
+  ofxAccountType?:
     | 'CHECKING'
     | 'SAVINGS'
     | 'MONEYMARKET'
@@ -14,5 +14,5 @@ export interface AccountModel {
     | undefined;
   lastUpdated?: Date;
   serverResponseDate?: Date;
-  serviceStatus: 'AVAIL' | 'PEND' | 'ACTIVE';
+  serviceStatus?: 'AVAIL' | 'PEND' | 'ACTIVE';
 }
