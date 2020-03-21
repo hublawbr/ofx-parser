@@ -1,10 +1,10 @@
 export interface TransactionModel {
-  fitId: string;
+  fitId?: string;
   datePosted?: Date;
   dateAvailable?: Date;
-  amount: number;
-  transactionType: string;
-  name: string;
+  amount?: number;
+  transactionType?: string;
+  name?: string;
   payee?: PayeeModel;
   extendedName?: string;
   checkNumber?: string;

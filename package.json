@@ -1,6 +1,6 @@
 {
   "name": "@bakesaled/carbonate",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A tool that converts financial data from OFX, QFX, or CSV into JSON.",
   "author": "Brandon Eleuterio",
   "license": "MIT",
@@ -32,7 +32,8 @@
     "test:ci": "npm run test:cov -- --runInBand --ci --logHeapUsage",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "prepublish": "yarn build"
   },
   "dependencies": {
     "date-fns": "^2.9.0",
