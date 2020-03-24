@@ -85,10 +85,8 @@ export class OfxCarbonator {
 
   private convertFromXML(ofxString: string): Promise<OfxBody> {
     return new Promise((resolve, reject) => {
-      try {
-        this.validateOfxString(ofxString);
-      } catch (e) {
-        reject(e);
+      if (!this.validOfxString(ofxString)) {
+        reject(new Error('Attempting to convert an invalid string.'));
       }
       const ofxResult = ofxString.split('<OFX>', 2);
       const ofxPart = `<OFX>${ofxResult[1]}`;
@@ -129,9 +127,7 @@ export class OfxCarbonator {
     });
   }
 
-  private validateOfxString(ofxString: string) {
-    if (ofxString.indexOf('<OFX>') < 0) {
-      throw new Error('Attempting to read invalid XML!');
-    }
+  private validOfxString(ofxString: string) {
+    return ofxString.indexOf('<OFX>') > -1;
   }
 }
