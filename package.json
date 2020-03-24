@@ -1,6 +1,6 @@
 {
   "name": "@bakesaled/carbonate",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A tool that converts financial data from OFX, QFX, or CSV into JSON.",
   "author": "Brandon Eleuterio",
   "license": "MIT",
