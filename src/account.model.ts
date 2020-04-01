@@ -1,3 +1,5 @@
+import { AccountBalanceModel } from './account-balance.model';
+
 export interface AccountModel {
   bankId?: string;
   brokerId?: string;
@@ -15,4 +17,6 @@ export interface AccountModel {
   lastUpdated?: Date;
   serverResponseDate?: Date;
   serviceStatus?: 'AVAIL' | 'PEND' | 'ACTIVE';
+  ledgerBalance?: AccountBalanceModel;
+  availableBalance?: AccountBalanceModel;
 }
