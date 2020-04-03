@@ -4,15 +4,26 @@ export interface AccountModel {
   bankId?: string;
   brokerId?: string;
   accountId?: string;
-  accountType?: 'BANK' | 'CREDITCARD' | 'INVESTMENT';
   ofxAccountType?:
     | 'CHECKING'
     | 'SAVINGS'
-    | 'MONEYMARKET'
+    | 'MONEYMRKT'
     | 'CREDITLINE'
     | 'CD'
     | 'CREDITCARD'
     | 'INVESTMENT'
+    | 'LOAN'
+    | undefined;
+  loanAccountType?:
+    | 'AUTO'
+    | 'CONSUMER'
+    | 'MORTGAGE'
+    | 'COMMERCIAL'
+    | 'STUDENT'
+    | 'MILITARY'
+    | 'SMB'
+    | 'CONSTR'
+    | 'HOMEEQUITY'
     | undefined;
   lastUpdated?: Date;
   serverResponseDate?: Date;

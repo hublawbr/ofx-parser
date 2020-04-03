@@ -7,7 +7,6 @@ export class OfxInvestmentAccountAdapter {
   ): AccountModel {
     return {
       accountId: accountInfo.INVACCTINFO.INVACCTFROM.ACCTID,
-      accountType: 'INVESTMENT',
       ofxAccountType: 'INVESTMENT',
       serviceStatus: accountInfo.INVACCTINFO.SVCSTATUS,
       brokerId: accountInfo.INVACCTINFO.INVACCTFROM.BROKERID

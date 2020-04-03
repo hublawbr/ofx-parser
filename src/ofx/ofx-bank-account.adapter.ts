@@ -22,7 +22,6 @@ export class OfxBankAccountAdapter {
     }
     return {
       accountId: accountNumber,
-      accountType: 'BANK',
       bankId: bankId,
       ofxAccountType: accountType,
       serviceStatus: serviceStatus
