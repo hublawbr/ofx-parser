@@ -27,6 +27,7 @@
     "build": "rollup -c",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "tsc-watch --onSuccess \"node ./dist/examples/index.js\"",
+    "dev": "tsc-watch --onSuccess \"node ./dist/examples/example.js\"",
     "lint": "tslint -p tsconfig.json",
     "test": "jest",
     "test:ci": "npm run test:cov -- --runInBand --ci --logHeapUsage",

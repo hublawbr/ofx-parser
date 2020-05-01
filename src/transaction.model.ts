@@ -1,15 +1,18 @@
 export interface TransactionModel {
-  fitId?: string;
-  datePosted?: Date;
-  dateAvailable?: Date;
-  amount?: number;
+  // Principais campos
   transactionType?: string;
+  amount?: number;
+  fitId?: string;
+  memo?: string;
+  datePosted?: Date;
+  refNumber?: string;
+  checkNumber?: string;
+
+  // specific
   name?: string;
+  dateAvailable?: Date;
   payee?: PayeeModel;
   extendedName?: string;
-  checkNumber?: string;
-  refNumber?: string;
-  memo?: string;
   correctFitId?: string;
   correctAction?: string;
   // Investment
