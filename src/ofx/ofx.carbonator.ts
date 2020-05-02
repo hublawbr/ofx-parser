@@ -16,7 +16,7 @@ import { OfxStatementDateAdapter } from './ofx-statement-date.carbonator';
 export class OfxCarbonator {
   async carbonateAccounts(xml: string): Promise<AccountModel[]> {
     const body = await this.convertFromXML(xml);
-    console.log('body', JSON.stringify(body));
+    // console.log('body', JSON.stringify(body));
     return OfxAccountInfoAdapter.convertToAccountList(
       body.OFX.SIGNUPMSGSRSV1.ACCTINFOTRNRS.ACCTINFORS.ACCTINFO
     );
@@ -78,7 +78,7 @@ export class OfxCarbonator {
     //   );
     // }
     else {
-      console.error('Extrato Bancário não identificado', body.OFX);
+      // console.error('Extrato Bancário não identificado', body.OFX);
       throw new Error('Extrato Bancário não identificado');
     }
 
@@ -126,7 +126,7 @@ export class OfxCarbonator {
         // Remove duplicate end-tags
         .replace(/<\/<added>(\w+?)>(<\/\1>)?/g, '</$1>');
 
-      console.debug('string to parse', xml);
+      // console.debug('string to parse', xml);
       let json;
       const parser = new Xml2JsParser.Parser({ explicitArray: false });
       parser.parseString(xml, (err, result) => {
