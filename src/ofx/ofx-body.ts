@@ -235,16 +235,23 @@ export interface OfxBankMessage {
     STMTRS: {
       CURDEF: string;
       BANKACCTFROM: OfxBankAccountFrom;
-      BANKTRANLIST: {
-        DTSTART: string;
-        DTEND: string;
-        STMTTRN: Array<OfxStatementTransaction>;
-      };
+      BANKTRANLIST: OfxStatementTransactionList // {
+      //   DTSTART: string;
+      //   DTEND: string;
+      //   STMTTRN: Array<OfxStatementTransaction>;
+      // };
       LEDGERBAL: OfxBalance;
       AVAILBAL: OfxBalance;
     };
   };
 }
+
+export interface OfxStatementTransactionList {
+  DTSTART: string;
+  DTEND: string;
+  STMTTRN: Array<OfxStatementTransaction>;
+}
+
 
 export interface OfxStatementTransaction {
   TRNTYPE: string;

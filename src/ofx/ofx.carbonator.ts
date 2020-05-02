@@ -11,6 +11,7 @@ import { OfxInvestmentPositionAdapter } from './ofx-investment-position.adapter'
 import * as Xml2JsParser from 'xml2js';
 import { AccountModel } from '../account.model';
 import { OfxAccountInfoAdapter } from './ofx-account-info.adapter';
+import { OfxStatementDateAdapter } from './ofx-statement-date.carbonator';
 
 export class OfxCarbonator {
   async carbonateAccounts(xml: string): Promise<AccountModel[]> {
@@ -27,6 +28,7 @@ export class OfxCarbonator {
     let availableBalance: AccountBalanceModel;
     let transactions: TransactionModel[];
     let positions: PositionModel[];
+    let statementDate: any = {}
     if (body.OFX.BANKMSGSRSV1) {
       ledgerBalance = OfxAccountBalanceAdapter.convertToAccountBalance(
         body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.LEDGERBAL
@@ -36,40 +38,49 @@ export class OfxCarbonator {
           body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.AVAILBAL
         );
       }
+      if (body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST.DTSTART) {
+          statementDate = OfxStatementDateAdapter.convertStatementDate(
+            body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST
+          )
+      }
+
       transactions = OfxStatementTransactionAdapter.convertTransactionList(
         body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST.STMTTRN
       );
-    } else if (body.OFX.CREDITCARDMSGSRSV1) {
-      ledgerBalance = OfxAccountBalanceAdapter.convertToAccountBalance(
-        body.OFX.CREDITCARDMSGSRSV1.CCSTMTTRNRS.CCSTMTRS.LEDGERBAL
-      );
-      if (body.OFX.CREDITCARDMSGSRSV1.CCSTMTTRNRS.CCSTMTRS.AVAILBAL) {
-        availableBalance = OfxAccountBalanceAdapter.convertToAccountBalance(
-          body.OFX.CREDITCARDMSGSRSV1.CCSTMTTRNRS.CCSTMTRS.AVAILBAL
-        );
-      }
-      transactions = OfxStatementTransactionAdapter.convertTransactionList(
-        body.OFX.CREDITCARDMSGSRSV1.CCSTMTTRNRS.CCSTMTRS.BANKTRANLIST.STMTTRN
-      );
-    } else if (body.OFX.INVSTMTMSGSRSV1) {
-      ledgerBalance = OfxInvestmentBalanceAdapter.convertToAccountBalance(
-        body.OFX.INVSTMTMSGSRSV1.INVSTMTTRNRS.INVSTMTRS
-      );
-      if (body.OFX.INVSTMTMSGSRSV1.INVSTMTTRNRS.INVSTMTRS) {
-        availableBalance = OfxInvestmentBalanceAdapter.convertToAccountBalance(
-          body.OFX.INVSTMTMSGSRSV1.INVSTMTTRNRS.INVSTMTRS
-        );
-      }
-      transactions = OfxInvestmentTransactionAdapter.convertTransactionList(
-        body.OFX.INVSTMTMSGSRSV1.INVSTMTTRNRS.INVSTMTRS.INVTRANLIST
-      );
+    }
+    // else if (body.OFX.CREDITCARDMSGSRSV1) {
+    //   ledgerBalance = OfxAccountBalanceAdapter.convertToAccountBalance(
+    //     body.OFX.CREDITCARDMSGSRSV1.CCSTMTTRNRS.CCSTMTRS.LEDGERBAL
+    //   );
+    //   if (body.OFX.CREDITCARDMSGSRSV1.CCSTMTTRNRS.CCSTMTRS.AVAILBAL) {
+    //     availableBalance = OfxAccountBalanceAdapter.convertToAccountBalance(
+    //       body.OFX.CREDITCARDMSGSRSV1.CCSTMTTRNRS.CCSTMTRS.AVAILBAL
+    //     );
+    //   }
+    //   transactions = OfxStatementTransactionAdapter.convertTransactionList(
+    //     body.OFX.CREDITCARDMSGSRSV1.CCSTMTTRNRS.CCSTMTRS.BANKTRANLIST.STMTTRN
+    //   );
+    // }
+    // else if (body.OFX.INVSTMTMSGSRSV1) {
+    //   ledgerBalance = OfxInvestmentBalanceAdapter.convertToAccountBalance(
+    //     body.OFX.INVSTMTMSGSRSV1.INVSTMTTRNRS.INVSTMTRS
+    //   );
+    //   if (body.OFX.INVSTMTMSGSRSV1.INVSTMTTRNRS.INVSTMTRS) {
+    //     availableBalance = OfxInvestmentBalanceAdapter.convertToAccountBalance(
+    //       body.OFX.INVSTMTMSGSRSV1.INVSTMTTRNRS.INVSTMTRS
+    //     );
+    //   }
+    //   transactions = OfxInvestmentTransactionAdapter.convertTransactionList(
+    //     body.OFX.INVSTMTMSGSRSV1.INVSTMTTRNRS.INVSTMTRS.INVTRANLIST
+    //   );
 
-      positions = OfxInvestmentPositionAdapter.convertToAccountPosition(
-        body.OFX.INVSTMTMSGSRSV1.INVSTMTTRNRS.INVSTMTRS
-      );
-    } else {
-      console.error('Unknown message', body.OFX);
-      throw new Error('Unknown message received from bank');
+    //   positions = OfxInvestmentPositionAdapter.convertToAccountPosition(
+    //     body.OFX.INVSTMTMSGSRSV1.INVSTMTTRNRS.INVSTMTRS
+    //   );
+    // }
+    else {
+      console.error('Extrato Bancário não identificado', body.OFX);
+      throw new Error('Extrato Bancário não identificado');
     }
 
     return {
@@ -78,6 +89,8 @@ export class OfxCarbonator {
         ? availableBalance.balanceAmount
         : undefined,
       balanceAsOf: ledgerBalance.balanceAsOf,
+      startDate: statementDate.start,
+      endDate: statementDate.end,
       transactions: transactions,
       positions: positions
     };

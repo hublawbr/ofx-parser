@@ -7,4 +7,6 @@ export interface StatementModel {
   ledgerBalance?: number;
   availableBalance?: number;
   balanceAsOf?: Date;
+  startDate?: Date;
+  endDate?: Date;
 }
