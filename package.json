@@ -1,8 +1,8 @@
 {
-  "name": "@bakesaled/carbonate",
-  "version": "1.0.6",
+  "name": "@hublaw/ofx-parser",
+  "version": "1.0.0",
   "description": "A tool that converts financial data from OFX, QFX, or CSV into JSON.",
-  "author": "Brandon Eleuterio",
+  "author": "Gustavo Lopes",
   "license": "MIT",
   "keywords": [
     "TypeScript",
@@ -15,9 +15,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bakesaled/carbonate.git"
+    "url": "git+https://github.com/hublawbr/ofx-parser.git"
   },
-  "homepage": "https://github.com/bakesaled/carbonate#readme",
+  "homepage": "https://github.com/hublawbr/ofx-parser#readme",
   "main": "dist/main.js",
   "module": "dist/main.es.js",
   "jsnext:main": "dist/index.es.js",

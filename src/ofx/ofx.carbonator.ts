@@ -43,7 +43,6 @@ export class OfxCarbonator {
             body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST
           )
       }
-
       transactions = OfxStatementTransactionAdapter.convertTransactionList(
         body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST.STMTTRN
       );
