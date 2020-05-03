@@ -1,2 +1,2 @@
-export * from './ofx.carbonator';
+export * from './ofx.parser';
 export * from './ofx-body';

@@ -1,4 +1,4 @@
-import { OfxParser } from './ofx.carbonator';
+import { OfxParser } from './ofx.parser';
 
 describe('OfxCarbonator', () => {
   let ofxParser: OfxParser;
