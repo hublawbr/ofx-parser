@@ -1,21 +1,21 @@
-import { OfxCarbonator } from './ofx.carbonator';
+import { OfxParser } from './ofx.carbonator';
 
 describe('OfxCarbonator', () => {
-  let ofxCarbonator: OfxCarbonator;
+  let ofxParser: OfxParser;
   beforeEach(() => {
-    ofxCarbonator = new OfxCarbonator();
+    ofxParser = new OfxParser();
   });
 
   it('should create', () => {
-    expect(ofxCarbonator).toBeDefined();
+    expect(ofxParser).toBeDefined();
   });
 
   it('should return false on a bad ofx string', () => {
-    expect(ofxCarbonator['validOfxString']('foo')).toBeFalsy();
+    expect(ofxParser['validOfxString']('foo')).toBeFalsy();
   });
 
   it('should throw error on bad statement string', async () => {
-    await expect(ofxCarbonator.carbonateStatement('foo')).rejects.toEqual(
+    await expect(ofxParser.parseStatement('foo')).rejects.toEqual(
       Error('Attempting to convert an invalid string.')
     );
   });

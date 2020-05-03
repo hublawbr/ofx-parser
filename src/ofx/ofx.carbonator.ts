@@ -4,17 +4,20 @@ import { OfxAccountBalanceAdapter } from './ofx-account-balance.carbonator';
 import { PositionModel } from '../position.model';
 import { TransactionModel } from '../transaction.model';
 import { OfxStatementTransactionAdapter } from './ofx-statement-transaction.adapter';
-import { OfxInvestmentTransactionAdapter } from './ofx-investment-transaction.adapter';
+// import { OfxInvestmentTransactionAdapter } from './ofx-investment-transaction.adapter';
 import { StatementModel } from '../statement.model';
-import { OfxInvestmentBalanceAdapter } from './ofx-investment-balance.adapter';
-import { OfxInvestmentPositionAdapter } from './ofx-investment-position.adapter';
+// import { OfxInvestmentBalanceAdapter } from './ofx-investment-balance.adapter';
+// import { OfxInvestmentPositionAdapter } from './ofx-investment-position.adapter';
 import * as Xml2JsParser from 'xml2js';
 import { AccountModel } from '../account.model';
 import { OfxAccountInfoAdapter } from './ofx-account-info.adapter';
 import { OfxStatementDateAdapter } from './ofx-statement-date.carbonator';
+import { createReadStream } from 'fs';
 
-export class OfxCarbonator {
-  async carbonateAccounts(xml: string): Promise<AccountModel[]> {
+export class OfxParser {
+  // Not currently working
+  // Needs to be fixed and changed back to public
+  private async carbonateAccounts(xml: string): Promise<AccountModel[]> {
     const body = await this.convertFromXML(xml);
     // console.log('body', JSON.stringify(body));
     return OfxAccountInfoAdapter.convertToAccountList(
@@ -22,7 +25,50 @@ export class OfxCarbonator {
     );
   }
 
-  async carbonateStatement(xml: string): Promise<StatementModel> {
+  private async readLocalFile(filePath: string) {
+    return new Promise((resolve, reject) => {
+      let ofxData = ''
+      const readStream = createReadStream(filePath)
+      readStream
+        .on('data', (data: string) => {
+          ofxData += data
+        })
+        .on('error', e => {
+          reject(e)
+        })
+        .on('end', () => {
+          resolve(ofxData)
+        })
+    })
+  }
+
+  /**
+   * This will parse an Ofx File saved on file system.
+   * Comes bundled with a little helper using FS to read local file
+   *
+   * @param filePath path to a local file
+   */
+  public async parseStatementFile(filePath: string): Promise<StatementModel> {
+    const ofxData = await this.readLocalFile(filePath) as string
+
+    let result: StatementModel
+    try {
+      result = await this.parseStatement(ofxData)
+      return result
+    } catch (err) {
+      console.error(err)
+      return err
+    }
+  }
+
+  /**
+   * This functions parses an Ofx File from a Readable Stream
+   * This function can be used to parse an Ofx from Google Storage for example.
+   * For parsing a local file, just use the parseStatementFile()
+   *
+   * @param xml A Readable Stream from a XML file
+   */
+  public async parseStatement(xml: string): Promise<StatementModel> {
     const body = await this.convertFromXML(xml);
     let ledgerBalance: AccountBalanceModel;
     let availableBalance: AccountBalanceModel;
@@ -39,9 +85,9 @@ export class OfxCarbonator {
         );
       }
       if (body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST.DTSTART) {
-          statementDate = OfxStatementDateAdapter.convertStatementDate(
-            body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST
-          )
+        statementDate = OfxStatementDateAdapter.convertStatementDate(
+          body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST
+        )
       }
       transactions = OfxStatementTransactionAdapter.convertTransactionList(
         body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST.STMTTRN

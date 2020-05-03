@@ -1,6 +1,6 @@
 // import * as prompts from 'prompts';
 import * as fs from 'fs';
-import { OfxCarbonator } from '../ofx';
+import { OfxParser } from '../ofx';
 import { TransactionModel } from 'src/transaction.model';
 import { StatementModel } from 'src/statement.model';
 
@@ -17,13 +17,13 @@ const main = async () => {
 
   const ofxData = await readFile(filePath);
   console.log('file read');
-  const ofxCarbonator = new OfxCarbonator();
+  const ofxParser = new OfxParser();
 
 
   let results: StatementModel;
   try {
     console.log('parsing statement...');
-    results = await ofxCarbonator.carbonateStatement(ofxData);
+    results = await ofxParser.parseStatement(ofxData);
     console.log('results', results);
     const creditOnly = results.transactions.filter(t => {
       return t.transactionType === 'CHECK'

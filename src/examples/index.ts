@@ -1,6 +1,6 @@
 import * as prompts from 'prompts';
 import * as fs from 'fs';
-import { OfxCarbonator } from '../ofx';
+import { OfxParser } from '../ofx';
 
 const main = async () => {
   const choice = await prompts({
@@ -22,15 +22,15 @@ const main = async () => {
 
   const ofxData = await readFile(filePathAnswer.filePath);
   console.log('file read');
-  const ofxCarbonator = new OfxCarbonator();
+  const ofxParser = new OfxParser();
   let results;
   try {
     if (choice.value) {
       console.log('carbonating statement...');
-      results = await ofxCarbonator.carbonateStatement(ofxData);
+      results = await ofxParser.parseStatement(ofxData);
     } else {
       console.log('carbonating accounts...');
-      results = await ofxCarbonator.carbonateAccounts(ofxData);
+      results = await ofxParser.parseStatement(ofxData);
     }
     console.log('results', results);
   } catch (e) {
