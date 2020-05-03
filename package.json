@@ -38,10 +38,10 @@
   },
   "dependencies": {
     "date-fns": "^2.9.0",
-    "prompts": "^2.3.1",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
+    "prompts": "^2.3.1",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "@types/jest": "25.1.1",
